@@ -4,6 +4,7 @@ import './index.css'
 import App from './App.jsx'
 import Home from './pages/Home.jsx'
 import Quiz from './pages/Quiz.jsx'
+import Account from './pages/Account.jsx'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 createRoot(document.getElementById('root')).render(
@@ -12,6 +13,7 @@ createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path='/' element={<Home />}/>
         <Route path='/quiz' element={<Quiz />}/>
+        <Route path='/account' element={<Account />}/>
         <Route path='/*' element={<h1>404! Page Currently Unavailable!</h1>}/>
       </Routes>
     </BrowserRouter>
