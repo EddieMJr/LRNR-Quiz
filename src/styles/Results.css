@@ -1,0 +1,46 @@
+.results-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 200px);
+}
+
+.results-content {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.results-logo {
+  font-size: 120px;
+  color: #00897b;
+  margin: 0 0 40px 0;
+  font-weight: 300;
+  letter-spacing: -2px;
+}
+
+.results-score {
+  font-size: 32px;
+  color: #666;
+  margin-bottom: 60px;
+  font-weight: 400;
+}
+
+.try-another-button {
+  display: inline-block;
+  background-color: #00897b;
+  color: white;
+  padding: 15px 40px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.try-another-button:hover {
+  background-color: #00796b;
+}
