@@ -1,52 +1,34 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import MainLayout from "../components/MainLayout";
 import "../styles/QuizGeneration.css";
 
-const QuizGeneration = () => {
+export default function QuizGeneration() {
   const navigate = useNavigate();
-
-  // State variables to hold form inputs
   const [topic, setTopic] = useState("");
   const [expertise, setExpertise] = useState("");
   const [numQuestions, setNumQuestions] = useState("5");
   const [style, setStyle] = useState("normal");
-  const [loading, setLoading] = useState(false); // Optional: show loading state
+  const [loading, setLoading] = useState(false);
 
-  // Function to handle form submission
-  const handleSubmit = async () => {
-    // Validation: check if required fields are selected
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     if (!topic || !expertise) {
       alert("Please select both topic and expertise level");
       return;
     }
 
     try {
-      setLoading(true); // Start loading
-
-      // Send POST request to backend
-      const response = await fetch("http://localhost:4000/api/generate-quiz", {
+      setLoading(true);
+      const res = await fetch("http://localhost:4000/api/generate-quiz", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          topic,
-          expertise,
-          number: numQuestions,
-          style,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ topic, expertise, number: numQuestions, style }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to generate quiz");
-      }
+      if (!res.ok) throw new Error("Failed to generate quiz");
+      const data = await res.json();
 
-      const data = await response.json(); // Get JSON response
-
-      console.log("Generated Questions:", data.questions);
-
-      // Navigate to quiz page and pass the questions and config
       navigate("/quiz-question", {
         state: {
           topic,
@@ -56,95 +38,91 @@ const QuizGeneration = () => {
           questions: data.questions,
         },
       });
-    } catch (error) {
-      console.error("Error generating quiz:", error);
-      alert("Error generating quiz. Please try again.");
+    } catch (err) {
+      console.error(err);
+      alert("Error generating quiz");
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
 
   return (
-    <MainLayout>
-      <div className="quiz-generation-container">
-        <h2 className="title">Quiz Generation Options</h2>
-        <p className="subtitle">
-          Please choose your preferences below to generate your personalized
-          quiz
-        </p>
+    <div className="quiz-generation-container">
+      <h2 className="title">Quiz Generation Options</h2>
+      <p className="subtitle">
+        Choose your preferences below to generate your personalized quiz
+      </p>
 
-        <div className="form-container">
-          {/* Topic Selection */}
-          <div className="form-group">
-            <label className="label">Topic</label>
-            <select
-              value={topic}
-              onChange={(e) => setTopic(e.target.value)}
-              className="select"
-            >
-              <option value="">Select a topic</option>
-              <option value="javascript">JavaScript</option>
-              <option value="python">Python</option>
-              <option value="css">CSS</option>
-              <option value="html">HTML</option>
-            </select>
-          </div>
-
-          {/* Expertise Selection */}
-          <div className="form-group">
-            <label className="label">Expertise</label>
-            <select
-              value={expertise}
-              onChange={(e) => setExpertise(e.target.value)}
-              className="select"
-            >
-              <option value="">Select expertise level</option>
-              <option value="novice">Novice</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="expert">Expert</option>
-            </select>
-          </div>
-
-          {/* Number of Questions */}
-          <div className="form-group">
-            <label className="label">Number of questions</label>
-            <select
-              value={numQuestions}
-              onChange={(e) => setNumQuestions(e.target.value)}
-              className="select"
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-            </select>
-          </div>
-
-          {/* Style of Questions */}
-          <div className="form-group">
-            <label className="label">Style of questions</label>
-            <select
-              value={style}
-              onChange={(e) => setStyle(e.target.value)}
-              className="select"
-            >
-              <option value="normal">Normal</option>
-              <option value="master">Master</option>
-              <option value="8years">Like I am an 8 years old</option>
-            </select>
-          </div>
-
-          {/* Submit Button */}
-          <button
-            onClick={handleSubmit}
-            className="submit-button"
-            disabled={loading} // disable while loading
+      <form className="form-container" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label className="label">Topic</label>
+          <select
+            value={topic}
+            onChange={(e) => setTopic(e.target.value)}
+            className="select"
           >
-            {loading ? "Generating..." : "SUBMIT"}
-          </button>
+            <option value="">Select a topic</option>
+            <option value="javascript">JavaScript</option>
+            <option value="python">Python</option>
+            <option value="css">CSS</option>
+            <option value="html">HTML</option>
+            <option value="golang">goolan</option>
+            <option value="aws">aws</option>
+            <option value="CI/CD">CI/CD</option>
+            <option value="home gardens">home gardens</option>
+            <option value="coffee">coffee</option>
+            <option value="finger foods">finger foods</option>
+          </select>
         </div>
-      </div>
-    </MainLayout>
-  );
-};
 
-export default QuizGeneration;
+        <div className="form-group">
+          <label className="label">Expertise</label>
+          <select
+            value={expertise}
+            onChange={(e) => setExpertise(e.target.value)}
+            className="select"
+          >
+            <option value="">Select expertise level</option>
+            <option value="novice">Novice</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="expert">Expert</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label className="label">Number of questions</label>
+          <select
+            value={numQuestions}
+            onChange={(e) => setNumQuestions(e.target.value)}
+            className="select"
+          >
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label className="label">Style of questions</label>
+          <select
+            value={style}
+            onChange={(e) => setStyle(e.target.value)}
+            className="select"
+          >
+            <option value="normal">Normal</option>
+            <option value="master">Master</option>
+            <option value="8years">Like I’m 8 years old</option>
+            <option value="1940's ganster">1940's ganster</option>
+            <option value="jedi">jedi</option>
+            <option value="captain jack sparrow">captain jack sparrow</option>
+            <option value="matthew mcconaughey">matthew mcconaughey</option>
+          </select>
+        </div>
+
+        <button type="submit" className="submit-button" disabled={loading}>
+          {loading ? "Generating..." : "SUBMIT"}
+        </button>
+      </form>
+    </div>
+  );
+}

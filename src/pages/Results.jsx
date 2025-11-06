@@ -1,37 +1,22 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import MainLayout from "../components/MainLayout";
 import "../styles/Results.css";
 
-const Results = () => {
+export default function Results() {
   const location = useLocation();
-  const resultsData = location.state || {};
-
-  // Default values if no data is passed
-  const questionsCorrect = resultsData.questionsCorrect || 0;
-  const questionsWrong = resultsData.questionsWrong || 1;
-  const total = resultsData.total || 1;
-
-  // Format as binary-style display
-  const correctBinary = questionsCorrect.toString().padStart(4, "0");
-  const wrongBinary = questionsWrong.toString().padStart(4, "0");
+  const { questionsCorrect = 0, questionsWrong = 0, total = 0 } = location.state || {};
 
   return (
-    <MainLayout>
-      <div className="results-container">
-        <div className="results-content">
-          <h1 className="results-logo">lrnr</h1>
-          <p className="results-score">
-            Questions Right: {correctBinary}
-            {wrongBinary}
-          </p>
-          <Link to="/quiz-generation" className="try-another-button">
-            TRY ANOTHER QUIZ
-          </Link>
-        </div>
+    <div className="results-container">
+      <div className="results-content">
+        <h1 className="results-logo">lrnr</h1>
+        <p className="results-score">
+          ✅ {questionsCorrect} correct / ❌ {questionsWrong} wrong out of {total}
+        </p>
+        <Link to="/quiz-generation" className="try-another-button">
+          TRY ANOTHER QUIZ
+        </Link>
       </div>
-    </MainLayout>
+    </div>
   );
-};
-
-export default Results;
+}
