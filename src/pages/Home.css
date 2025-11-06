@@ -1,0 +1,61 @@
+section {
+    margin: 1rem;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.heroText__p {
+    margin: 1rem;
+    font-size: 1.35rem;
+    padding: 1rem;
+}
+
+ul {
+    margin: 1rem;
+    text-align: left;
+    justify-content: center;
+}
+
+img {
+    margin-top: 1rem;
+}
+
+.journeyButton__button {
+    padding: 1.25rem;
+    background-color: #308d84;
+    color: #fff;
+    border: none;
+    border-radius: .22rem;
+    width: 10rem;
+    box-shadow: .5rem .5rem 1rem rgba(0, 0, 0, 0.3);
+    margin: 1rem;
+    font-size: 1.05rem;
+}
+
+.boxes__section {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.boxes__section > * {
+  flex: 1 1 calc(33% - 1rem);
+  max-width: calc(33% - 1rem);
+  min-width: none;
+}
+
+.icon-block {
+    padding: .3rem;
+}
+
+.sectionIcons__h2 .material-icons{
+    font-size: 3rem;
+    margin: 2rem;
+}
+
+.sectionHead__h5 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}

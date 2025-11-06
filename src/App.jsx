@@ -4,7 +4,6 @@ import Account from "./pages/Account";
 import QuizGeneration from "./pages/QuizGeneration";
 import QuizQuestion from "./pages/QuizQuestions";
 import Results from "./pages/Results";
-import "./App.css";
 
 function App() {
   return (

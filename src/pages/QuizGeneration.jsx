@@ -23,76 +23,73 @@ const QuizGeneration = () => {
   };
 
   return (
-    <MainLayout>
-      <div className="quiz-generation-container">
-        <h2 className="title">Quiz Generation Options</h2>
-        <p className="subtitle">
-          Please choose your preferences below to generate your personalized
-          quiz
-        </p>
+    <div className="quiz-generation-container">
+      <h2 className="title">Quiz Generation Options</h2>
+      <p className="subtitle">
+        Please choose your preferences below to generate your personalized quiz
+      </p>
 
-        <div className="form-container">
-          <div className="form-group">
-            <label className="label">Topic</label>
-            <select
-              value={topic}
-              onChange={(e) => setTopic(e.target.value)}
-              className="select"
-            >
-              <option value="">Select a topic</option>
-              <option value="javascript">JavaScript</option>
-              <option value="python">Python</option>
-              <option value="css">CSS</option>
-              <option value="html">HTML</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label className="label">Expertise</label>
-            <select
-              value={expertise}
-              onChange={(e) => setExpertise(e.target.value)}
-              className="select"
-            >
-              <option value="">Select expertise level</option>
-              <option value="novice">Novice</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="expert">Expert</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label className="label">Number of questions</label>
-            <select
-              value={numQuestions}
-              onChange={(e) => setNumQuestions(e.target.value)}
-              className="select"
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label className="label">Style of questions</label>
-            <select
-              value={style}
-              onChange={(e) => setStyle(e.target.value)}
-              className="select"
-            >
-              <option value="normal">normal</option>
-              <option value="master">master</option>
-              <option value="8years">like I am an 8 years old</option>
-            </select>
-          </div>
-
-          <button onClick={handleSubmit} className="submit-button">
-            SUBMIT
-          </button>
+      <div className="form-container">
+        <div className="form-group">
+          <label className="label">Topic</label>
+          <select
+            value={topic}
+            onChange={(e) => setTopic(e.target.value)}
+            className="select"
+          >
+            <option value="">Select a topic</option>
+            <option value="javascript">JavaScript</option>
+            <option value="python">Python</option>
+            <option value="css">CSS</option>
+            <option value="html">HTML</option>
+          </select>
         </div>
+
+        <div className="form-group">
+          <label className="label">Expertise</label>
+          <select
+            value={expertise}
+            onChange={(e) => setExpertise(e.target.value)}
+            className="select"
+          >
+            <option value="">Select expertise level</option>
+            <option value="novice">Novice</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="expert">Expert</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label className="label">Number of questions</label>
+          <select
+            value={numQuestions}
+            onChange={(e) => setNumQuestions(e.target.value)}
+            className="select"
+          >
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label className="label">Style of questions</label>
+          <select
+            value={style}
+            onChange={(e) => setStyle(e.target.value)}
+            className="select"
+          >
+            <option value="normal">normal</option>
+            <option value="master">master</option>
+            <option value="8years">like I am an 8 years old</option>
+          </select>
+        </div>
+
+        <button onClick={handleSubmit} className="submit-button">
+          SUBMIT
+        </button>
       </div>
-    </MainLayout>
+    </div>
   );
 };
 

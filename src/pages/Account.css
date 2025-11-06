@@ -1,0 +1,27 @@
+main {
+  flex: 1;
+}
+
+.accountPageHead {
+  margin: 1.5rem;
+  color: #3caea3;
+}
+
+.icon-block {
+  margin: 1.3rem;
+}
+
+.quizExpert__ul {
+  list-style: none;
+  text-align: center;
+}
+
+.sectionHeader__h2 .material-icons {
+  color: #64d8a4;
+  font-size: 3rem;
+  margin: 3rem;
+}
+
+.sectionHeader__h5 {
+  font-size: 1.5rem;
+}
