@@ -22,7 +22,7 @@ export default function QuizQuestions() {
     }
 
     try {
-      const res = await fetch("http://localhost:4000/api/evaluate-answer", {
+      const res = await fetch("https://lrnr-8aau.onrender.com/api/evaluate-answer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

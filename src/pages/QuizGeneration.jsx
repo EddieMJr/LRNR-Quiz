@@ -20,7 +20,7 @@ export default function QuizGeneration() {
 
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:4000/api/generate-quiz", {
+      const res = await fetch("https://lrnr-8aau.onrender.com/api/generate-quiz", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ topic, expertise, number: numQuestions, style }),
