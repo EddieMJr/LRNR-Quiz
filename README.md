@@ -8,6 +8,7 @@ Using the Gemini API, LRNR offers both focused study sessions and casual quiz ex
 - Frontend: React + Vite
 - Backend: Node.js + Express
 - AI Integration: Gemini API
+
 This combination ensures a smooth, responsive, and AI-powered learning experience.
 
 🚀 Future Enhancements
