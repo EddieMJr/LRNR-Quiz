@@ -7,23 +7,46 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-//Allow frontend to connect
+/*
+   ALLOW FRONTEND CONNECTIONS
+*/
+const allowedOrigins = [
+  "http://localhost:5173",          // Local development
+  "https://lrnr-1.onrender.com",    // Your deployed frontend on Render
+];
+
+// Optional: log incoming origins for debugging
+app.use((req, res, next) => {
+  console.log("🌍 Request from:", req.headers.origin);
+  next();
+});
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: (origin, callback) => {
+      // Allow requests from allowed origins or from tools like Postman (no origin)
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    },
     methods: ["GET", "POST"],
+    credentials: true,
   })
 );
+
 app.use(express.json());
 
-// Initialize Gemini AI
+/*
+    INITIALIZE GEMINI AI
+  */
 const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY,
 });
 
 /*
-    GENERATE QUIZ ROUTE
-*/
+   GENERATE QUIZ ROUTE
+   */
 app.post("/api/generate-quiz", async (req, res) => {
   const { topic, expertise, number, style } = req.body;
 
@@ -33,7 +56,7 @@ You are a professional quiz generator.
 Create exactly ${number} distinct quiz questions about "${topic}" for a ${expertise} learner.
 Use the "${style}" tone.
 
- VERY IMPORTANT RULES:
+VERY IMPORTANT RULES:
 - Only return numbered questions in this exact format:
 1. Question one?
 2. Question two?
@@ -41,39 +64,37 @@ Use the "${style}" tone.
 - Do NOT include any introductions, titles, explanations, or text before question 1.
 - Do NOT include answers or hints.
 Only output the numbered questions, nothing else.
-    `;
+`;
 
     const response = await ai.models.generateContent({
       model: "gemini-2.0-flash",
       contents: [{ role: "user", parts: [{ text: prompt }] }],
     });
 
-    // Extract AI text safely
     const text =
       response?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
 
     if (!text) throw new Error("No valid text returned from Gemini");
 
-    // 🧹 Clean up: remove everything before "1."
+    // 🧹 Clean up output: remove everything before "1."
     const cleanedText = text.replace(/^.*?(?=\n?1\.)/, "").trim();
 
-    // Split by question numbers and clean
+    // Split into questions and clean
     const questions = cleanedText
       .split(/\n\d+\.\s*/)
       .filter((q) => q.trim() !== "")
       .map((q) => q.trim());
 
-    // Return only valid questions
     res.json({ questions });
   } catch (error) {
-    console.error("Quiz generation error:", error);
+    console.error("❌ Quiz generation error:", error);
     res.status(500).json({ error: "Failed to generate quiz." });
   }
 });
 
-/*
-   EVALUATE ANSWER ROUTE 
-*/
+/* 
+   EVALUATE ANSWER ROUTE
+ */
 app.post("/api/evaluate-answer", async (req, res) => {
   const { question, userAnswer } = req.body;
 
@@ -89,16 +110,11 @@ Respond **only** in valid JSON:
   "evaluation": "Correct" or "Incorrect",
   "explanation": "Short reason why"
 }
-    `;
+`;
 
     const response = await ai.models.generateContent({
       model: "gemini-2.0-flash",
-      contents: [
-        {
-          role: "user",
-          parts: [{ text: evaluationPrompt }],
-        },
-      ],
+      contents: [{ role: "user", parts: [{ text: evaluationPrompt }] }],
     });
 
     const text =
@@ -124,9 +140,9 @@ Respond **only** in valid JSON:
   }
 });
 
-/*
-  START SERVER
+/* 
+    START SERVER
 */
 app.listen(PORT, () => {
-  console.log(` Gemini Quiz Server running at http://localhost:${PORT}`);
+  console.log(`🚀 Gemini Quiz Server running at http://localhost:${PORT}`);
 });
